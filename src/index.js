@@ -44,9 +44,19 @@ function displayTemperature(response) {
   iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-let apiKey = "25d874c323417eb6fa36f60bca44be24";
-let lat = -26.186332588;
-let lon = 28.318998724;
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-console.log(apiUrl);
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+function search(city) {
+  let apiKey = "25d874c323417eb6fa36f60bca44be24";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+search("Benoni");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
